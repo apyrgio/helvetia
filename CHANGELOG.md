@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+### Changed
+
+- Update the CI tests to always run inside a temporary directory.
+
 ## [0.1.0] - 2020-06-21
 
 Initial release.

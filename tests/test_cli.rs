@@ -218,6 +218,7 @@ fn test_invalid_args() {
     //
     // * Test not provided key
     cli()
+        .current_dir(temp_dir.path())
         .assert()
         .failure()
         .stderr(predicate::str::contains("required arguments"))
@@ -230,6 +231,7 @@ fn test_invalid_args() {
     cli()
         .args(&["--kv", "badkv"])
         .args(&["--keyfile", "nonexistent"])
+        .current_dir(temp_dir.path())
         .assert()
         .failure()
         .stderr(predicate::str::contains(
@@ -239,6 +241,7 @@ fn test_invalid_args() {
     cli()
         .args(&["--algo", "badalgo"])
         .args(&["--keyfile", "nonexistent"])
+        .current_dir(temp_dir.path())
         .assert()
         .failure()
         .stderr(predicate::str::contains(
@@ -254,6 +257,7 @@ fn test_invalid_args() {
         cli()
             .args(&["--kv", kv])
             .args(&["--keyfile", "nonexistent"])
+            .current_dir(temp_dir.path())
             .assert()
             .failure()
             .stderr(predicate::str::contains(
@@ -263,12 +267,14 @@ fn test_invalid_args() {
         cli()
             .args(&["--kv", kv])
             .args(&["--store-dir", "/this/is/a/bad/file"])
+            .current_dir(temp_dir.path())
             .assert()
             .failure();
 
         cli()
             .args(&["--kv", kv])
             .args(&["--store-dir", "key"])
+            .current_dir(temp_dir.path())
             .assert()
             .failure();
     }
@@ -277,6 +283,7 @@ fn test_invalid_args() {
     cli()
         .args(&["--keyfile", "nonexistent"])
         .args(&["--kv", "memory"])
+        .current_dir(temp_dir.path())
         .assert()
         .failure()
         .stderr(predicate::str::contains("No such file or directory"));
