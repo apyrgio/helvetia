@@ -7,6 +7,8 @@ Versioning].
 
 ## [Unreleased]
 
+## [0.1.1] - 2020-06-22
+
 ### Changed
 
 - Update the CI tests to always run inside a temporary directory.
@@ -19,5 +21,6 @@ Initial release.
 [Keep a Changelog]: https://keepachangelog.com/en/1.0.0/
 [Semantic Versioning]: https://semver.org/spec/v2.0.0.html
 
-[Unreleased]: https://github.com/apyrgio/helvetia/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/apyrgio/helvetia/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/apyrgio/helvetia/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/apyrgio/helvetia/releases/tag/v0.1.0
