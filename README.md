@@ -5,7 +5,7 @@ simple rule; any user can create a secret using a token, and they can only
 access it using the same token. Helvetia will then go to great lengths to ensure
 that the secret remains safe, even from itself.
 
-[![Crates.io](https://img.shields.io/crates/v/helvetia.svg)](https://crates.io/crates/helvetiaj)
+[![Crates.io](https://img.shields.io/crates/v/helvetia.svg)](https://crates.io/crates/helvetia)
 [![Docs.rs](https://docs.rs/helvetia/badge.svg)](https://docs.rs/helvetia)
 
 ## Overview
