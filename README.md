@@ -1,9 +1,9 @@
 # 🇨🇭 Helvetia
 
-A library and API server that allows anonymous storage of secrets, with a simple
-rule; any user can create a secret using a token, and they can only access it
-using the same token. Helvetia will then go to great lengths to ensure that the
-secret remains safe, even from itself.
+A library and API server that allows for anonymous storage of secrets, with a
+simple rule; any user can create a secret using a token, and they can only
+access it using the same token. Helvetia will then go to great lengths to ensure
+that the secret remains safe, even from itself.
 
 [![Crates.io](https://img.shields.io/crates/v/helvetia.svg)](https://crates.io/crates/helvetiaj)
 [![Docs.rs](https://docs.rs/helvetia/badge.svg)](https://docs.rs/helvetia)
@@ -30,7 +30,7 @@ securely:
 * Hash the secret's name and tokens.
 * Encrypt the secret using a single-use key, derived by Helvetia's encryption
   key and the secret's name.
-* Store the key-value pairs to the underlying key-value store.
+* Store the key-value pair to the underlying key-value store.
 
 Helvetia has **not** undergone a security audit and is **not** ready for use in
 production. Prefer using other services such as Hashicorp's [Vault], if you
