@@ -83,12 +83,12 @@ fn serve(store_dir: &str, key: &str, port: u16) -> std::process::Child {
     // seconds.
     for _ in 0..500 {
         if is_ready(&mut child, port) {
-            break;
+            return child;
         }
         thread::sleep(time::Duration::from_millis(10));
     }
 
-    child
+    panic!("The server could not become ready after 5 seconds")
 }
 
 /// Attempt to get a random port to listen on.
