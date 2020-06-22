@@ -42,6 +42,7 @@ fn cli() -> Command {
 ///
 /// 1. Ensure that the command is running.
 /// 2. Ensure that we can establish a TCP connection to the server.
+/// 3. Ensure that a request on a wrong URL fails with HTTP 404.
 fn is_ready(srv: &mut std::process::Child, port: u16) -> bool {
     match srv.try_wait() {
         Ok(None) => (),
@@ -53,7 +54,17 @@ fn is_ready(srv: &mut std::process::Child, port: u16) -> bool {
         }
     };
 
-    std::net::TcpStream::connect(format!("127.0.0.1:{}", port)).is_ok()
+    if !std::net::TcpStream::connect(format!("127.0.0.1:{}", port)).is_ok() {
+        return false;
+    }
+
+    let client = reqwest::blocking::Client::new();
+    let res = client
+        .get(&format!("http://127.0.0.1:{}/nonexistent", port))
+        .send()
+        .unwrap();
+
+    res.status().as_u16() == 404
 }
 
 /// Start the Helvetia server and ensure that it's running.

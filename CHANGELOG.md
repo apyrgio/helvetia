@@ -10,6 +10,7 @@ Versioning].
 ### Changed
 
 - Update the CI tests to always run inside a temporary directory.
+- Make the CI tests that run a Helvetia server more reliable.
 
 ## [0.1.0] - 2020-06-21
 
