@@ -5,6 +5,7 @@ simple rule; any user can create a secret using a token, and they can only
 access it using the same token. Helvetia will then go to great lengths to ensure
 that the secret remains safe, even from itself.
 
+[![CI](https://github.com/apyrgio/helvetia/workflows/CI/badge.svg?branch=master&event=schedule)](https://github.com/apyrgio/helvetia/actions?query=event%3Aschedule+branch%3Amaster)
 [![Crates.io](https://img.shields.io/crates/v/helvetia.svg)](https://crates.io/crates/helvetia)
 [![Docs.rs](https://docs.rs/helvetia/badge.svg)](https://docs.rs/helvetia)
 
