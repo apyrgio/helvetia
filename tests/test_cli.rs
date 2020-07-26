@@ -54,17 +54,43 @@ fn is_ready(srv: &mut std::process::Child, port: u16) -> bool {
         }
     };
 
-    if !std::net::TcpStream::connect(format!("127.0.0.1:{}", port)).is_ok() {
-        return false;
-    }
-
     let client = reqwest::blocking::Client::new();
     let res = client
         .get(&format!("http://127.0.0.1:{}/nonexistent", port))
-        .send()
-        .unwrap();
+        .send();
 
-    res.status().as_u16() == 404
+    match res {
+        //XXX: Previously, we had a check that would ensure that the TCP
+        //connection works, before sending an HTTP request. This way, we could
+        //just check if the HTTP response is 404, else panic. However, our
+        //CI tests in Github Actions would sometimes fail with the following
+        //error:
+        //
+        //     thread 'test_server' panicked at
+        //     'called `Result::unwrap()` on an `Err` value: reqwest::Error
+        //     {
+        //         kind: Request,
+        //         url: "http://127.0.0.1:40841/nonexistent",
+        //         source: hyper::Error(
+        //             Connect,
+        //             ConnectError(
+        //                 "tcp connect error",
+        //                 Os {
+        //                     code: 111,
+        //                     kind: ConnectionRefused,
+        //                     message: "Connection refused"
+        //                  }
+        //              )
+        //          )
+        //      }'
+        //
+        // We never found a way to reproduce the above error locally, so we
+        // decided instead to treat every HTTP error as a benign error, and
+        // retry instead of panicking. Even if the error is fatal, the retry
+        // should last for 5 seconds, so in the end we will be notified.
+        Err(_) => false,
+        Ok(response) => response.status().as_u16() == 404,
+    }
 }
 
 /// Start the Helvetia server and ensure that it's running.
