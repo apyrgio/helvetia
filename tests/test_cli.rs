@@ -93,39 +93,46 @@ fn is_ready(srv: &mut std::process::Child, port: u16) -> bool {
     }
 }
 
-/// Start the Helvetia server and ensure that it's running.
+/// Start the Helvetia server.
 ///
 /// Start the Helvetia server in a way that even when restarted, we can still
 /// query its state. To do this, we require:
 ///
 /// 1. A directory to store the RocksDB files.
 /// 2. A Helvetia key.
-///
-/// Finally, wait for 5 seconds until the server gets ready, else fail.
 fn serve(store_dir: &str, key: &str, port: u16) -> std::process::Child {
     // XXX: We start the command this way so that we can get an
     // `std::process::Child` as result.
     let mut cmd =
         std::process::Command::cargo_bin(env!("CARGO_PKG_NAME")).unwrap();
-    let mut child = cmd
-        .args(&["--keyfile", key])
+    cmd.args(&["--keyfile", key])
         .args(&["--address", &format!("127.0.0.1:{}", port)])
         .args(&["--store-dir", store_dir])
         .args(&["--kv", "rocksdb"])
         .args(&["--max-size", "1000"])
         .spawn()
-        .unwrap();
+        .unwrap()
+}
 
+/// Ensure that the Helvetia server is running and is healthy.
+fn ensure_server_ready(srv: &mut std::process::Child, port: u16) {
     // Check every 10 ms if the Helvetia server is ready, for a total of 5
     // seconds.
     for _ in 0..500 {
-        if is_ready(&mut child, port) {
-            return child;
+        if is_ready(srv, port) {
+            return ();
         }
         thread::sleep(time::Duration::from_millis(10));
     }
 
+    kill_server(srv);
     panic!("The server could not become ready after 5 seconds")
+}
+
+/// Kill a running Helvetia server.
+fn kill_server(srv: &mut std::process::Child) {
+    srv.kill().unwrap();
+    srv.wait().unwrap();
 }
 
 /// Attempt to get a random port to listen on.
@@ -164,10 +171,10 @@ where
         port,
     );
 
+    ensure_server_ready(&mut srv, port);
     let result = panic::catch_unwind(|| f(port));
 
-    srv.kill().unwrap();
-    srv.wait().unwrap();
+    kill_server(&mut srv);
     assert!(result.is_ok());
 }
 
