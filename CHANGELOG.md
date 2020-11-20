@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix a broken link in the API docs.
+
 ## [0.1.1] - 2020-06-22
 
 ### Changed

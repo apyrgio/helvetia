@@ -111,14 +111,14 @@ pub struct PutSecretReq {
     /// The token used to grant full access to the secret.
     pub owner_token: String,
 
-    /// [optional] The token used to access only the secret's metadata.
+    /// (optional) The token used to access only the secret's metadata.
     #[serde(default)]
     pub meta_token: String,
 
     /// The secret's data.
     pub data: String,
 
-    /// [optional] The secret's metadata.
+    /// (optional) The secret's metadata.
     #[serde(default)]
     pub meta: String,
 }
