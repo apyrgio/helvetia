@@ -214,7 +214,7 @@ impl<'a> Secret {
     /// This method may return an error, if the buffer cannot be deserialized
     /// or if the protobuf-generated secret has any empty fields.
     pub fn from_buf(buf: &'a [u8]) -> res::Res<Self> {
-        match protobuf::parse_from_bytes(&buf) {
+        match protobuf::Message::parse_from_bytes(&buf) {
             Ok(s) => Self::from_proto(&s),
             // FIXME: We may need to log a reason why
             Err(_) => Err(res::Error::SecretInvalid),
