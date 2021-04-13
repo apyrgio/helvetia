@@ -11,6 +11,11 @@ Versioning].
 
 - Fix a broken link in the API docs.
 
+### Changed
+
+- Update the `caves` dependency to `v0.2`, meaning that RocksDB support is now
+  optional. This should help with the (re)build times of this project.
+
 ## [0.1.1] - 2020-06-22
 
 ### Changed

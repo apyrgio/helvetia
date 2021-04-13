@@ -68,6 +68,7 @@ enum Algo {
 enum KV {
     Memory,
     File,
+    #[cfg(feature = "with-rocksdb")]
     RocksDB,
 }
 
@@ -90,7 +91,7 @@ fn create_parser<'a, 'b>() -> App<'a, 'b> {
             Arg::with_name("kv")
                 .long("kv")
                 .takes_value(true)
-                .default_value(KV::RocksDB.as_ref())
+                .default_value(KV::Memory.as_ref())
                 .possible_values(&KV::VARIANTS)
                 .help("The type of the key-value store that will be used"),
         )
@@ -150,6 +151,7 @@ fn create_kv<'a>(m: &ArgMatches<'a>) -> anyhow::Result<Box<dyn caves::Cave>> {
     match kv {
         KV::Memory => Ok(Box::new(caves::MemoryCave::new())),
         KV::File => Ok(Box::new(caves::FileCave::new(&store_dir)?)),
+        #[cfg(feature = "with-rocksdb")]
         KV::RocksDB => Ok(Box::new(caves::RocksDBCave::new(&store_dir)?)),
     }
 }

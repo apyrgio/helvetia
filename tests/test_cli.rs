@@ -98,7 +98,7 @@ fn is_ready(srv: &mut std::process::Child, port: u16) -> bool {
 /// Start the Helvetia server in a way that even when restarted, we can still
 /// query its state. To do this, we require:
 ///
-/// 1. A directory to store the RocksDB files.
+/// 1. A directory to store the local files.
 /// 2. A Helvetia key.
 fn serve(store_dir: &str, key: &str, port: u16) -> std::process::Child {
     // XXX: We start the command this way so that we can get an
@@ -108,7 +108,7 @@ fn serve(store_dir: &str, key: &str, port: u16) -> std::process::Child {
     cmd.args(&["--keyfile", key])
         .args(&["--address", &format!("127.0.0.1:{}", port)])
         .args(&["--store-dir", store_dir])
-        .args(&["--kv", "rocksdb"])
+        .args(&["--kv", "file"])
         .args(&["--max-size", "1000"])
         .spawn()
         .unwrap()
@@ -149,7 +149,7 @@ fn get_random_port() -> u16 {
     port
 }
 
-/// Start an Helvetia server and run a funtion.
+/// Start an Helvetia server and run a function.
 ///
 /// In order to always stop the server when the function aborts, the easiest
 /// way is to use `panic::catch_unwind()` function [1].
@@ -161,6 +161,7 @@ where
 {
     let temp_store_dir = temp_dir.child("store");
     let temp_key_file = temp_dir.child("key");
+    temp_store_dir.create_dir_all().unwrap();
     temp_key_file.write_str("secret").unwrap();
 
     let port = get_random_port();
@@ -297,7 +298,12 @@ fn test_invalid_args() {
     // * Test no store dir
     // * Test non-existent store dir
     // * Test bad store dir
-    for kv in &["file", "rocksdb"] {
+    let mut kvs = vec!["file"];
+    if cfg!(features = "with-rocksdb") {
+        kvs.push("rocksdb");
+    }
+
+    for kv in &kvs {
         cli()
             .args(&["--kv", kv])
             .args(&["--keyfile", "nonexistent"])

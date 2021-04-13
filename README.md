@@ -95,6 +95,12 @@ dependency tree:
 helvetia = { version = "x.y.z", default-features = false }
 ```
 
+If you want RocksDB support, you can enable it with:
+
+```toml
+helvetia = { version = "x.y.z", default-features = false, features = ["with-rocksdb"] }
+```
+
 ### As a binary
 
 You can run Helvetia using one of the binaries of the [stable releases], or
@@ -116,6 +122,9 @@ following methods:
   $ ./target/release/helvetia --help
   Helvetia: Anonymous and secure storage of secrets...
   ```
+
+If you want to enable RocksDB support, you can add the `--features with-rocksdb`
+flag in the above commands.
 
 ## Contributing
 
