@@ -24,7 +24,7 @@ jobs:
           # XXX: Required, else we're bitten by this Cargo bug:
           # https://github.com/rust-lang/cargo/issues/6313
           - cmd: doc
-            args: --no-deps
+            args: --features=with-rocksdb --no-deps
 
     steps:
       - name: Checkout
@@ -90,7 +90,9 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: "-- --nocapture" # Allow printing the output of tests
+          # Run the tests with RocksdDB support enabled and always print their
+          # output, for debugging reasons.
+          args: "--features=with-rocksdb -- --nocapture"
 
   build:
     name: Build on ${{ matrix.os }}
@@ -115,7 +117,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: "--release"
+          args: "--features=with-rocksdb --release"
 
       - name: Upload binaries
         uses: actions/upload-artifact@v1
