@@ -19,7 +19,7 @@ categories = ["command-line-utilities", "cryptography"]
 
 [dependencies]
 anyhow = "1.0"
-base64 = "0.12"
+base64 = "0.13"
 caves = "0.2"
 protobuf = "2"
 # XXX: There are no stable versions of `ring` [1], meaning that we must always
@@ -30,28 +30,28 @@ protobuf = "2"
 #
 # [1]: https://github.com/briansmith/ring#versioning--stability
 ring = "0.16"
-rand = "0.7"
+rand = "0.8"
 serde = {version = "1.0", features = ["derive"]}
 subtle = "2"
 thiserror = "1.0"
-tindercrypt = "0.2"
-tokio = { version = "0.2", features = ["full"]  }
-warp = "0.2"
+tindercrypt = "0.3"
+tokio = { version = "1", features = ["full"]  }
+warp = "0.3"
 
 # NOTE: The following dependencies are required only for the CLI version of the
 # crate, and are only included if the `cli` feature is enabled. See also
 # https://github.com/rust-lang/cargo/issues/1982, for the current state of
 # binary-only dependencies in `cargo`.
 clap = { version = "2", optional = true }
-strum = { version = "0.18", optional = true }
-strum_macros = { version = "0.18", optional = true }
+strum = { version = "0.20", optional = true }
+strum_macros = { version = "0.20", optional = true }
 
 [dev-dependencies]
 assert_cmd = "1"
 assert_fs = "1"
 hex = "0.4"
 predicates = "1"
-reqwest = { version = "0.10", default-features = false, features = ["blocking", "json"] }
+reqwest = { version = "0.11", default-features = false, features = ["blocking", "json"] }
 
 [build-dependencies]
 protoc-rust = { version = "2", optional = true }
