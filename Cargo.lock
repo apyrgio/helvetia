@@ -166,9 +166,9 @@ checksum = "b700ce4376041dcd0a327fd0097c41095743c4c8af8887265942faf1100bd040"
 
 [[package]]
 name = "caves"
-version = "0.2.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2c639b9c9c79fc52c7bcc3b3935fcc4770cb5d65dc97b0bc1a1a976ada3a9a1e"
+checksum = "c67f3d63e49effe9b0f3c0a3a0f7f1df4b0515e12add1f290da6987bdc8b1c18"
 dependencies = [
  "anyhow",
  "atomicwrites",
