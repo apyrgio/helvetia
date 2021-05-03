@@ -7,7 +7,7 @@ license = "MPL-2.0"
 description = """
 An HTTP client for the Helvetia API.
 """
-homepage = "https://github.com/apyrgio/helvetia/client"
+homepage = "https://github.com/apyrgio/helvetia/tree/master/client"
 repository = "https://github.com/apyrgio/helvetia"
 readme = "README.md"
 keywords = ["rest", "http"]

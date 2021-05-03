@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix a broken link in Cargo.toml.
+
 ## [0.1.0] - 2021-05-03
 
 Initial release.
