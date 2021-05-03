@@ -1,0 +1,83 @@
+# NOTE: The `cargo` commands in this Github Action require the `--manifest
+# client/Cargo.toml' arg to make them work in the `client/` subdirectory
+
+name: CI - client
+on:
+  pull_request:
+    paths:
+      - 'client/**'
+  push:
+    paths:
+      - 'client/**'
+  schedule:
+    - cron: '0 0 * * *' # Run every day at 00:00 UTC.
+
+env:
+  RUST_BACKTRACE: full  # Shows more info when a test fails.
+
+jobs:
+  basic_checks:
+    name: Basic checks (cargo ${{ matrix.cmd }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        cmd:
+          - fmt
+          - doc
+        include:
+          - cmd: fmt
+            args: --manifest-path client/Cargo.toml -- --check
+          - cmd: doc
+            args: --manifest-path client/Cargo.toml --no-deps
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+          components: rustfmt
+
+      - name: cargo ${{ matrix.cmd }}
+        uses: actions-rs/cargo@v1
+        with:
+          command: ${{ matrix.cmd }}
+          args: ${{ matrix.args }}
+
+
+  test:
+    name: Test ${{ matrix.rust }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        rust:
+          - stable
+          - beta
+          - nightly
+        os:
+          - ubuntu-latest
+          - macOS-latest
+          - windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Rust (${{ matrix.rust }})
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          override: true
+
+      - name: Test
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          # Print the test output, for debugging reasons.
+          args: --manifest-path client/Cargo.toml -- --nocapture
