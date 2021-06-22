@@ -196,7 +196,7 @@ impl HelvetiaClient {
 // off.
 #[allow(unused_results)]
 #[cfg(test)]
-pub mod tests {
+mod tests {
     use super::*;
     use crate::errors::Error;
     use httpmock;

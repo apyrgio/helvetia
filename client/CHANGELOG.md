@@ -9,6 +9,8 @@ Versioning].
 
 ### Fixed
 
+- Remove a stale `anyhow` deendency.
+
 ## [0.1.1] - 2021-05-03
 
 - Fix a broken link in Cargo.toml.
