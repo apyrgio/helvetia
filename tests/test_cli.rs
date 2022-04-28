@@ -346,7 +346,9 @@ fn test_invalid_args() {
         .current_dir(temp_dir.path())
         .assert()
         .failure()
-        .stderr(predicate::str::contains("invalid IP address syntax"));
+        .stderr(
+            predicate::str::is_match("invalid .* address syntax").unwrap(),
+        );
 
     // Test bad max size
     cli()

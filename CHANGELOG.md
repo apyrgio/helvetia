@@ -12,6 +12,10 @@ Versioning].
 - Update the versions of the dependencies.
 - Make the Helvetia client cloneable.
 
+### Fixed
+
+- Fix a broken test case, due to a change in Rust nightly for an error message.
+
 ## [0.2.0] - 2021-04-15
 
 ### Fixed
