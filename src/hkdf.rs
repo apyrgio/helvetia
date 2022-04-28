@@ -83,7 +83,7 @@ pub fn derive_key(
     let okm = match prk.expand(_info, _KeyType(out_key.len())) {
         Ok(okm) => okm,
         Err(e) => {
-            // The HKDF RFC bounds the legth of the OKM to 255x the length of
+            // The HKDF RFC bounds the length of the OKM to 255x the length of
             // the hashing algorithm. This means that a larger buffer for the
             // derived key is prohibited and `ring` returns an error. In our
             // case, since this is not a generic function, we consider this as
