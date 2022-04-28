@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+### Changed
+
+- Update the versions of the dependencies.
+
 ## [0.2.0] - 2021-04-15
 
 ### Fixed
