@@ -52,7 +52,7 @@ impl Meta {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 /// The HTTP client for the Helvetia API.
 ///
 /// This client provides a Rust interface on top of the Helvetia API.

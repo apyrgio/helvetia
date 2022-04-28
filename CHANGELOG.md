@@ -10,6 +10,7 @@ Versioning].
 ### Changed
 
 - Update the versions of the dependencies.
+- Make the Helvetia client cloneable.
 
 ## [0.2.0] - 2021-04-15
 
